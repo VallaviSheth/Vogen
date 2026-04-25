@@ -1,0 +1,26 @@
+[project]
+name = "vogen"
+version = "0.1.0"
+dependencies = [
+"openenv-core",
+"unsloth",
+"trl>=0.12",
+"transformers>=4.45",
+"peft",
+"accelerate",
+"fastapi",
+"uvicorn[standard]",
+"pydantic>=2",
+"numpy",
+"scipy",
+"scikit-learn",
+"sentence-transformers",
+"wandb",
+"pytest",
+"ruff",
+"pyright",
+]
+
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"

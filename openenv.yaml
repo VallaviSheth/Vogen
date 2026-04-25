@@ -1,0 +1,11 @@
+name: vogen
+version: 0.1.0
+entrypoint: server.app:app
+rubrics:
+  - id: critic_score
+  - id: justification
+  - id: novelty
+  - id: difficulty
+  - id: calibration
+tools:
+  - name: vogen.style
