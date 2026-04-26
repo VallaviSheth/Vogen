@@ -24,3 +24,13 @@ dependencies = [
 [build-system]
 requires = ["setuptools"]
 build-backend = "setuptools.build_meta"
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+markers = [
+    "anticheat: anti-cheat tests",
+    "critics: critic tests",
+    "curriculum: curriculum tests",
+    "rubrics: rubric tests",
+    "runway: runway tests",
+]

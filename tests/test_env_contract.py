@@ -65,7 +65,7 @@ def test_score_returns_five_fields():
     }):
         reward = client.score([])
         assert isinstance(reward, Reward)
-        assert reward.dict() == {
+        assert reward.model_dump() == {
             'critic': 0.1,
             'novelty': 0.2,
             'calibration': 0.3,

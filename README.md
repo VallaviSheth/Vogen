@@ -43,6 +43,9 @@ Fashion styling is inherently subjective yet rule-bound: the "right" outfit depe
 
 ### Running the Training Script
 
+**Interactive Colab Notebook (recommended for judges):**
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/YOUR_USERNAME/vogen/blob/main/training/train_vogen_colab.ipynb)
+
 **Smoke Test (fast validation on CPU):**
 ```bash
 python -m training.train_with_plots --config training/configs/grpo_default.yaml --smoke --episodes 2 --output-dir results
@@ -65,10 +68,10 @@ python -m training.train_with_plots --config training/configs/grpo_default.yaml 
 *Figure 3: Composite view of reward and loss progress.*
 
 **Key Metrics:**
-- **Baseline (random agent)**: ~0.35 avg reward
-- **After 10 episodes**: ~0.55 avg reward  
-- **After 50 episodes**: ~0.72 avg reward
-- **Improvement**: +106% over baseline
+- **Baseline (random agent)**: 0.35 avg reward
+- **Trained agent**: 0.51 avg reward  
+- **Improvement**: +46% over baseline
+- **Final Loss**: 0.80
 
 ---
 

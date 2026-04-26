@@ -42,4 +42,4 @@ class Observation(BaseModel):
 class State(BaseModel):
     current_obs: Optional[Observation] = None
 
-StepResult.update_forward_refs()
+StepResult.model_rebuild()
