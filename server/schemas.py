@@ -1,5 +1,5 @@
 from pydantic import BaseModel, Field
-from typing import List, Dict, Any
+from typing import List, Dict, Any, Union, Optional
 
 class Garment(BaseModel):
     """A garment item."""
@@ -26,16 +26,36 @@ class Observation(BaseModel):
     context_vector: List[float]
     history: List[Dict[str, Any]]
 
-class Action(BaseModel):
-    """Styling action."""
+class Outfit(BaseModel):
     garment_ids: List[str]
     justification: str
-    self_predicted_score: float = Field(ge=0.0, le=1.0)
+    self_predicted_score: float
+
+class Prediction(BaseModel):
+    predicted_score: float
+    reasoning: str
+
+class NegotiationMove(BaseModel):
+    offer: Dict[str, Any]
+    counter: Optional[Dict[str, Any]] = None
+
+class DesignMutation(BaseModel):
+    base_outfit: Outfit
+    changes: List[Dict[str, Any]]
+
+Action = Union[Outfit, Prediction, NegotiationMove, DesignMutation]
+
+class Reward(BaseModel):
+    critic: float
+    novelty: float
+    calibration: float
+    teaching: float
+    difficulty: float
 
 class StepResult(BaseModel):
     """Step result."""
     observation: Observation
-    reward_dict: Dict[str, float]
+    reward: Reward
     done: bool
     info: Dict[str, Any]
 

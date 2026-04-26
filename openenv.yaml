@@ -7,5 +7,10 @@ rubrics:
   - id: novelty
   - id: difficulty
   - id: calibration
+  - id: teaching
 tools:
+  - name: vogen.style
+  - name: vogen.negotiate
+  - name: vogen.predict
+  - name: vogen.evolve
   - name: vogen.style
