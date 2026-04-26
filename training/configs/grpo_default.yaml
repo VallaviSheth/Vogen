@@ -1,9 +1,11 @@
 model_name: Qwen/Qwen2.5-0.5B-Instruct
+train_episodes: 50
+max_steps: 5
 lora_r: 16
 lora_target_modules: ["q_proj", "v_proj", "k_proj", "o_proj"]
-max_steps: 10
 batch_size: 1
 learning_rate: 1e-5
+num_train_epochs: 1
 reward_weights:
   critic_score: 1.0
   justification: 0.4

@@ -1,0 +1,8 @@
+{
+  "baseline_reward": 0.35,
+  "trained_reward": 0.5110136451554711,
+  "improvement_percent": 46.00389861584889,
+  "min_loss": 0.7465166025624037,
+  "max_loss": 1.5022360093509624,
+  "final_loss": 0.8044941775352653
+}
