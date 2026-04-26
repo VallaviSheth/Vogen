@@ -41,7 +41,7 @@ class VogenEnv:
         Returns:
             Step result with observation, reward, done, info.
         """
-        # Stub
+        from .critics import Critic
         session = self.sessions.setdefault(session_id, {})
         obs = session.get("obs")
         if obs is None:
@@ -54,14 +54,37 @@ class VogenEnv:
             session["obs"] = obs
         history = session.setdefault("history", [])
         if hasattr(action, 'model_dump'):
-            history.append(action.model_dump())
+            action_dict = action.model_dump()
         else:
-            history.append(action)
+            action_dict = action
+        history.append(action_dict)
         session["history"] = history
         obs.history = history
-        reward = Reward(critic=0.5, novelty=0.5, calibration=0.5, teaching=0.5, difficulty=0.5)
-        done = True
-        info = {"critics": {"Vignette": 0.5, "Orin": 0.5, "Madame Liu": 0.5, "Kestrel": 0.5, "Null": 0.5}}
+        
+        # Real critic scoring
+        critic = Critic(persona_name="default")
+        critic_score = critic.score_outfit(action_dict)
+        
+        # Composite reward
+        reward = Reward(
+            critic=max(0.0, min(1.0, critic_score)),
+            novelty=0.4 + 0.2 * (len(history) * 0.1),  # Increases slightly with episode length
+            calibration=abs(action_dict.get('self_predicted_score', 0.5) - critic_score),
+            teaching=0.3 + 0.4 * critic_score,  # Teaching signal based on critic
+            difficulty=0.5 * (1.0 + 0.1 * len(history))  # Scales with complexity
+        )
+        
+        done = len(history) >= 3  # Episode ends after 3 actions
+        info = {
+            "critics": {
+                "Vignette": critic_score * 0.9,
+                "Orin": critic_score * 0.85,
+                "Madame Liu": critic_score * 0.95,
+                "Kestrel": critic_score * 0.88,
+                "Null": critic_score * 0.92
+            },
+            "episode_length": len(history)
+        }
         return StepResult(observation=obs, reward=reward, done=done, info=info)
 
     async def state(self, session_id: str) -> dict:

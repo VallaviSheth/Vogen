@@ -1,0 +1,15 @@
+__pycache__
+*.pyc
+.git
+.gitignore
+.pytest_cache
+*.egg-info
+dist
+build
+.venv
+venv
+*.pkl
+*.pt
+results/
+merged_model/
+.wandb

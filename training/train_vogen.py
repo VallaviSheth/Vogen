@@ -48,11 +48,17 @@ def main():
 
     aggregator = RewardAggregator(config['reward_weights'])
 
+    # Environment client for rollouts
+    from client.vogen_client import VogenClient
+    env_client = VogenClient.from_url("http://127.0.0.1:8000")
+
     def reward_fn(trajectory):
         return aggregator.aggregate(trajectory)[0]
 
-    # Stub dataset
-    train_dataset = [{"dummy": "data"}]
+    # Generate real dataset from environment
+    print("Generating training dataset from environment...")
+    train_dataset = rollout(model, tokenizer, env_client, n_episodes=config.get('train_episodes', 10), max_steps=config['max_steps'])
+    print(f"Generated {len(train_dataset)} training examples.")
 
     trainer = GRPOTrainer(
         model=model,
